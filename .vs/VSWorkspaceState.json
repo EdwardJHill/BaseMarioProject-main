@@ -1,13 +1,7 @@
 {
   "ExpandedNodes": [
-    "",
-    "\\BaseMarioProject-main",
-    "\\BaseMarioProject-main\\MarioBaseProject",
-    "\\BaseMarioProject-main\\MarioBaseProject\\Images",
-    "\\BaseMarioProject-main\\MarioBaseProject\\SDL2",
-    "\\BaseMarioProject-main\\MarioBaseProject\\SDL2\\SDL",
-    "\\BaseMarioProject-main\\MarioBaseProject\\SDL2\\SDL\\image_include"
+    ""
   ],
-  "SelectedNode": "\\BaseMarioProject-main\\MarioBaseProject.sln",
+  "SelectedNode": "\\MarioBaseProject.sln",
   "PreviewInSolutionExplorer": false
 }
