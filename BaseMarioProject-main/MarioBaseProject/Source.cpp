@@ -69,17 +69,7 @@ bool InitSDL()
 				cout << "SDL_Image didn't work . my bad " << IMG_GetError();
 				return false;
 			}
-			/*
-			g_texture = new Texture2D(g_renderer);
-			if (!g_texture->LoadFromFile("Images/test.bmp"))
-			{
-				return false;
-			}
-			if (g_texture == nullptr)
-			{
-				return false;
-			}
-			*/
+
 			
 		}
 		else
