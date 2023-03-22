@@ -4,14 +4,27 @@
 
 void Character::MoveLeft(float deltaTime)
 {
-    m_position.x -= 1;
+    m_position.x -= MOVEMENTSPEED * deltaTime;
     m_facing_direction = FACING_LEFT;
 }
 
 void Character::MoveRight(float deltaTime)
 {
-    m_position.x += 1;
+    m_position.x += MOVEMENTSPEED* deltaTime;
     m_facing_direction = FACING_RIGHT;
+}
+
+void Character::Jump(float deltaTime)
+{
+    if (m_can_jump == true)
+    {
+        m_can_jump = false;
+        m_jump_force = INITIAL_JUMP_FORCE;
+        m_jumping = true;
+        
+    }
+    std::cout << m_position.y << std::endl;
+    
 }
 
 Character::Character(SDL_Renderer* renderer, std::string imagePath, Vector2D start_position)
@@ -21,7 +34,10 @@ Character::Character(SDL_Renderer* renderer, std::string imagePath, Vector2D sta
 	m_texture = new Texture2D(m_renderer);
     m_facing_direction = FACING_LEFT;
     m_moving_left = false;
-    m_moving_right = true;
+    m_moving_right = false;
+    m_jumping = false;
+    m_can_jump = true;
+    m_jump_force = INITIAL_JUMP_FORCE;
 	if (!m_texture->LoadFromFile(imagePath))
 	{
 		std::cout << "Failed to load background texture!" << std::endl;
@@ -49,6 +65,25 @@ void Character::Render()
 
 void Character::Update(float deltaTime, SDL_Event e)
 {
+    //deal with jumping first
+    if (m_jumping)
+    {
+        //adjust position
+        m_position.y -= m_jump_force * deltaTime;
+
+        //reduce jump force
+        m_jump_force -= JUMP_FORCE_DECREMENT * deltaTime;
+
+        //is jump force 0?
+        if (m_jump_force <= 0.0f)
+        {
+           
+            m_jumping = false;
+            
+        }
+    }
+    AddGravity(deltaTime);
+
     if (m_moving_left)
     {
         MoveLeft(deltaTime);
@@ -57,8 +92,6 @@ void Character::Update(float deltaTime, SDL_Event e)
     {
         MoveRight(deltaTime);
     }
-	while (SDL_PollEvent(&e)) {
-        
 		/* We are only worried about SDL_KEYDOWN and SDL_KEYUP events */
         switch (e.type) {
             /* Look for a keypress */
@@ -66,22 +99,19 @@ void Character::Update(float deltaTime, SDL_Event e)
             /* Check the SDLKey values and move change the coords */
             switch (e.key.keysym.sym) {
             case SDLK_LEFT:
-                std::cout << "yello left" << m_position.x <<std::endl;
-                //m_position.x -= 3;
+
                 m_moving_left = true;
-                m_facing_direction = FACING_LEFT;
+              
                 break;
             case SDLK_RIGHT:
-                std::cout << "yello right"<< m_position.x << std::endl;
-                //m_position.x += 3;
                 m_moving_right = true;
-                m_facing_direction = FACING_RIGHT;
+
                 break;
             case SDLK_UP:
-                std::cout << "yello up" << std::endl;
+                Jump(deltaTime);
                 break;
             case SDLK_DOWN:
-                std::cout << "yello down" << std::endl;
+
                 break;
             default:
                 break;
@@ -90,20 +120,31 @@ void Character::Update(float deltaTime, SDL_Event e)
         case SDL_KEYUP:
             switch (e.key.keysym.sym) {
             case SDLK_LEFT:
-                std::cout << "yello left" << m_position.x << std::endl;
-                //m_position.x -= 3;
                 m_moving_left = false;
 
                 break;
             case SDLK_RIGHT:
-                std::cout << "yello right" << m_position.x << std::endl;
-                //m_position.x += 3;
                 m_moving_right = false;
 
                 break;
+            default:
+                break;
             }
         }
+    
+}
+
+void Character::AddGravity(float deltaTime)
+{
+    if (m_position.y + 64 <= SCREEN_HEIGHT)
+    {
+        m_position.y += GRAVITY * deltaTime;
     }
+    else
+    {
+        m_can_jump = true;
+    }
+        
 }
 
 
