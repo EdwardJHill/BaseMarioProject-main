@@ -1,7 +1,10 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\BaseMarioProject-main",
+    "\\BaseMarioProject-main\\MarioBaseProject",
+    "\\BaseMarioProject-main\\MarioBaseProject\\Images"
   ],
-  "SelectedNode": "\\MarioBaseProject.sln",
+  "SelectedNode": "\\BaseMarioProject-main\\MarioBaseProject\\Character.cpp",
   "PreviewInSolutionExplorer": false
 }
