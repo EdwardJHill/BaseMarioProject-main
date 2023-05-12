@@ -3,7 +3,7 @@ CharacterMario::CharacterMario(SDL_Renderer* renderer, std::string imagePath, Ve
 {
 	m_renderer = renderer;
 	m_position = start_position;
-	m_texture =
+	
 }
 
 
